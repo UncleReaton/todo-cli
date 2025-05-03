@@ -17,8 +17,18 @@ type Task struct {
 	Priority    int
 }
 
+func generateID() int {
+	maxID := 0
+	for _, task := range tasks {
+		if task.ID > maxID {
+			maxID = task.ID
+		}
+	}
+	return maxID + 1
+}
+
 func newTask(desc string) *Task {
-	task := Task{Description: desc, Priority: 1, ID: len(tasks) + 1}
+	task := Task{Description: desc, Priority: 1, ID: generateID()}
 	return &task
 }
 
