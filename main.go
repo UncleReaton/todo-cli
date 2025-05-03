@@ -81,9 +81,23 @@ func main() {
 		log.Infof(format, "Task added:", task.Description)
 
 	case "list":
-		printList(tasks)
+		printTable(tasks)
 
 	case "done":
+		if len(os.Args) < 3 {
+			log.Error("Please provide the task ID to mark as done")
+			return
+		}
+		id, err := strconv.Atoi(os.Args[2])
+		if err != nil {
+			log.Error("Invalid task ID", "value", os.Args[2])
+			return
+		}
+		// tasks, _ := LoadTasks()
+		markTaskDone(tasks, id)
+		SaveTasks(tasks)
+
+	case "delete":
 		if len(os.Args) < 3 {
 			log.Error("Please provide the task ID to mark as done")
 			return

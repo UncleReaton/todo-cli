@@ -3,7 +3,7 @@ package main
 type Task struct {
 	ID          int
 	Description string
-	Priority    int
+	Done        bool
 }
 
 func generateID() int {
@@ -17,6 +17,16 @@ func generateID() int {
 }
 
 func newTask(desc string) *Task {
-	task := Task{Description: desc, Priority: 1, ID: generateID()}
+	task := Task{Description: desc, Done: false, ID: generateID()}
 	return &task
+}
+
+func markTaskDone(tasks []Task, id int) []Task {
+	for i := range tasks {
+		if tasks[i].ID == id {
+			tasks[i].Done = true
+			break
+		}
+	}
+	return tasks
 }
