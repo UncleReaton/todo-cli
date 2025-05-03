@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 	"strconv"
 
@@ -10,37 +9,6 @@ import (
 )
 
 var tasks []Task
-
-type Task struct {
-	ID          int
-	Description string
-	Priority    int
-}
-
-func generateID() int {
-	maxID := 0
-	for _, task := range tasks {
-		if task.ID > maxID {
-			maxID = task.ID
-		}
-	}
-	return maxID + 1
-}
-
-func newTask(desc string) *Task {
-	task := Task{Description: desc, Priority: 1, ID: generateID()}
-	return &task
-}
-
-func printTask(task Task) {
-	fmt.Println("ID:", task.ID, task.Description, "-", task.Priority)
-}
-
-func listTasks() {
-	for _, task := range tasks {
-		printTask(task)
-	}
-}
 
 func saveToFile() {
 	file, err := os.Create("tasks.json")
@@ -113,7 +81,7 @@ func main() {
 		log.Infof(format, "Task added:", task.Description)
 
 	case "list":
-		listTasks()
+		printList(tasks)
 
 	case "done":
 		if len(os.Args) < 3 {
